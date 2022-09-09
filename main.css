@@ -1,0 +1,150 @@
+* {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 1100px; 
+}
+
+header {
+  background: #394674;
+  color: #fff;
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+nav {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+form {
+  max-width: 1000px;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+footer {
+  background: #394674;
+  color: #fff;
+  width: 100%;
+  padding: 0.5rem;
+
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  bottom: 0;
+}
+/*  Painel de controle*/
+nav{
+  width: 100%;
+  background-color: #b0b3b6;
+  margin-bottom: 8px;
+}
+nav ul{
+  list-style: none;
+}
+nav ul li{
+display: inline;
+}
+nav ul li a{
+  color: #fff;
+  text-decoration: none;
+  margin: 10px;
+  padding: 3px;
+}
+nav ul li a:hover{
+  background-color: #394674;
+}
+#cor_sistema{
+ position: absolute;
+ top: 48px;
+ right: 10px;
+}
+table{
+  width: 40%;
+}
+table td{
+  text-align: center;
+}
+th{
+  color: #fff;
+  background-color: #394674;
+}
+tr{
+  height: 30px;
+}
+tr:hover{
+  background-color: #394674;
+  color: #fff;
+}
+td:hover{
+  color: #fff;
+}
+#titletab{
+  background-color: #394674;
+  color: #fff;
+}
+progress{
+  height: 20px;
+}
+ul{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#disc_ativas{
+width: 40%;
+margin-bottom: 10px;
+}
+hr{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+input {
+display: block;
+margin-left: 150px;
+height: 25px;
+margin-bottom: 5px;
+width: 300px;
+}
+.input{
+  width: 200px;
+}
+.form{
+  width: 50%;
+}
+.form label{
+margin-left: 150px;
+}
+fieldset{
+  color: #394674;
+  border-color: #394674;
+}
+.button{
+  margin-top: 20px;
+  width: 80px;
+  margin-left: 275px;
+  font-size: 15px;
+  padding: 2px;
+}
+.button:hover{
+  background-color: #394674;
+  color: #fff;
+  border: none;
+}
+.cor_sistema{
+  width: 40px;
+}
