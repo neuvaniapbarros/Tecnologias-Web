@@ -1,0 +1,16 @@
+body{
+    width: 100%;
+    height: 100%;
+    }
+    .tela{
+        height: 100px;
+        width: 100px;
+        display: none;
+    }
+    @media (orientation: landscape){
+        .tela {
+            display: block;
+            background-color: black;
+        }  
+    }
+    
