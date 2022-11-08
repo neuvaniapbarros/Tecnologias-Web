@@ -1,0 +1,76 @@
+
+.blue{
+    width:  20%;
+    height: 35%;
+    background-color: blue;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items:center ;
+    color: aliceblue;
+
+}
+
+.slide_1{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-direction: column;   
+}
+.slide_2{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+}
+.slide_3{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+    justify-content: flex-end;
+}
+.slide_4{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+    justify-content: center;
+}
+.slide_5{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+    flex-wrap: wrap;
+}
+.slide_6{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+    justify-content: flex-end;
+    flex-flow: row-reverse wrap;
+    order: 1;
+
+}
+.slide_7{
+    width: 100%;
+    height: 500px;
+    margin-top: 3px;
+    border: solid 5px black;
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;    
+    justify-content: start;
+}
+
