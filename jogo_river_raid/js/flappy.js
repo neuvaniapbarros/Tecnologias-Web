@@ -4,12 +4,11 @@ function novoElemento(tagName, className) {
     return elemento
 }
 
-function Barreira(reversa = false) {
+function Barreira() {
     this.elemento = novoElemento('div', 'barreira')
-    const borda = novoElemento('div', 'borda')
     const corpo = novoElemento('div', 'corpo')
-    this.elemento.appendChild(reversa ? corpo : borda)
-    this.elemento.appendChild(reversa ? borda : corpo)
+    // this.elemento.appendChild(corpo)
+    this.elemento.appendChild(corpo)
 
     this.setAltura = altura => corpo.style.width = `${altura}px`
 
@@ -61,7 +60,7 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto) {
         new ParDeBarreiras(altura, abertura -40, largura + espaco * 9)
     ]
 
-    const deslocamento = 3
+    const deslocamento = 5
     this.animar = () => {
         this.pares.forEach(par => {
             par.setX(par.getX() - deslocamento)
@@ -94,7 +93,6 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto) {
 
 function Passaro(alturaJogo) {
     let voando = false
-
     this.elemento = novoElemento('img', 'passaro')
     this.elemento.src = 'img/passaro.png'
 
@@ -105,8 +103,8 @@ function Passaro(alturaJogo) {
     window.onkeyup = e => voando = false
 
     this.animar = () => {
-        const novoY = this.getY() + (voando ? 8 : -5)
-        const alturaMaxima = alturaJogo - this.elemento.clientWidth
+        const novoY = this.getY() + (voando ? 10 : -5)
+        const alturaMaxima =  this.elemento.clientWidth
         if (novoY <= 0) {
             this.setY(0)
         } else if (novoY >= alturaMaxima) {
