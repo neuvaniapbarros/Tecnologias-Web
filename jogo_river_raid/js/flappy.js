@@ -4,11 +4,12 @@ function novoElemento(tagName, className) {
     return elemento
 }
 
-function Barreira() {
+function Barreira(reversa = false) {
     this.elemento = novoElemento('div', 'barreira')
+    const borda = novoElemento('div', 'borda')
     const corpo = novoElemento('div', 'corpo')
-    // this.elemento.appendChild(corpo)
-    this.elemento.appendChild(corpo)
+    this.elemento.appendChild(reversa ? corpo : borda)
+    this.elemento.appendChild(reversa ? borda : corpo)
 
     this.setAltura = altura => corpo.style.width = `${altura}px`
 
@@ -41,8 +42,47 @@ function ParDeBarreiras(altura, abertura, popsicaoNaTela) {
 
     this.sortearAbertura()
     this.setX(popsicaoNaTela)
-} 
+}
 
+function BarreiasCentrais(){
+    this.elemento = novoElemento('div', 'barreiraCentral')
+    
+    this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
+    this.setY = y => this.elemento.style.bottom = `${y}px`
+    this.getX = () => parseInt(this.elemento.style.left.split('px')[0])
+    this.setX = y => this.elemento.style.left = `${y}px`
+
+       
+    this.setY(400)
+    this.setX(500)
+
+    const deslocamento = 3;
+    this.animar = () => {
+      
+            this.setY(this.getY() - deslocamento)
+        }
+}
+function Combustivel(){
+    this.elemento = novoElemento('img', 'combustivel')
+    this.elemento.src = 'img/comb.png'
+    
+    this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
+    this.setY = y => this.elemento.style.bottom = `${y}px`
+    this.getX = () => parseInt(this.elemento.style.left.split('px')[0])
+    this.setX = y => this.elemento.style.left = `${y}px`
+
+       
+    this.setY(400)
+    this.setX(500)
+
+    const deslocamento = 3;
+    this.animar = () => {
+      
+            this.setY(this.getY() - deslocamento)
+        }
+}
+// const b= new BarreiasCentrais()
+// document.querySelector('[wm-flappy]').appendChild(b.elemento)
 /* const b= new ParDeBarreiras(500,300,1000)
 document.querySelector('[wm-flappy]').appendChild(b.elemento)  */
 
@@ -60,16 +100,20 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto) {
         new ParDeBarreiras(altura, abertura -40, largura + espaco * 9)
     ]
 
-    const deslocamento = 5
+    const deslocamento = 3
+    
     this.animar = () => {
+        
         this.pares.forEach(par => {
             par.setX(par.getX() - deslocamento)
-                console.log("Posi x: ",par.getX())
-                console.log("largura: ", par.getLargura())
             if (par.getX() < - par.getLargura()) {
+              // notificarPonto()
                 par.setX(par.getX() + espaco * this.pares.length)
                 //par.sortearAbertura()
             }
+          
+            
+            
             // const meio = largura / 2
             // const cruzouMeio = par.getX() + deslocamento >= meio
             //     && par.getX() < meio
@@ -91,20 +135,39 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto) {
 // },20)  
 
 
-function Passaro(alturaJogo) {
-    let voando = false
-    this.elemento = novoElemento('img', 'passaro')
-    this.elemento.src = 'img/passaro.png'
+function Foguete(alturaJogo) {
+    let voando = 0
 
+    this.elemento = novoElemento('img', 'foguete')
+    this.elemento.src = 'img/foguete.png'
+
+    
     this.getY = () => parseInt(this.elemento.style.left.split('px')[0])
     this.setY = y => this.elemento.style.left = `${y}px`
 
-    window.onkeydown = e => voando = true
-    window.onkeyup = e => voando = false
-
+   
+    window.onkeypress = function (e) {
+        if(e.keyCode == 108)  voando = 1
+        else if(e.keyCode == 106)  voando = 2
+        else voando = 0
+    } 
+    
+   // window.onkeydown = e => voando =  true
+    //window.onkeyup = e => voando = false
+    
     this.animar = () => {
-        const novoY = this.getY() + (voando ? 10 : -5)
-        const alturaMaxima =  this.elemento.clientWidth
+      
+        
+        let novoY = this.getY();
+        if(voando == 1){
+            novoY = this.getY() + 4;
+        }
+        else if(voando == 2){
+            novoY = this.getY() - 4;
+        }
+        
+        const alturaMaxima = alturaJogo - this.elemento.clientWidth
+
         if (novoY <= 0) {
             this.setY(0)
         } else if (novoY >= alturaMaxima) {
@@ -116,35 +179,35 @@ function Passaro(alturaJogo) {
     this.setY(alturaJogo / 2)
 }
 
- const barreiras = new Barreiras(400, 200, 100, 100)
-const passaro = new Passaro(1200)
-
-const areaDoJogo = document.querySelector('[wm-flappy]')
-
-areaDoJogo.appendChild(passaro.elemento)
-barreiras.pares.forEach( par => areaDoJogo.appendChild(par.elemento)) 
-
-setInterval(() => {
-      barreiras.animar()
-      passaro.animar() 
-},20) 
-
-
-//  function Progresso() {
-
-//     this.elemento = novoElemento('span', 'progresso')
-//     this.atualizarPontos = pontos => {
-//         this.elemento.innerHTML = pontos
-//     }
-//     this.atualizarPontos(0)
-// }
-
-// /*  const barreiras = new Barreiras(700, 400, 200, 400)
-// const passaro = new Passaro(700)
+//  const barreiras = new Barreiras(400, 200, 100, 100)
+// const foguete = new Foguete(1200)
 
 // const areaDoJogo = document.querySelector('[wm-flappy]')
 
-// areaDoJogo.appendChild(passaro.elemento)
+// areaDoJogo.appendChild(foguete.elemento)
+// barreiras.pares.forEach( par => areaDoJogo.appendChild(par.elemento)) 
+
+// setInterval(() => {
+//      barreiras.animar()
+//       foguete.animar() 
+// },20) 
+
+
+  function Progresso() {
+
+    this.elemento = novoElemento('span', 'progresso')
+    this.atualizarPontos = pontos => {
+        this.elemento.innerHTML = pontos
+    }
+    this.atualizarPontos(0)
+ }
+
+// /*  const barreiras = new Barreiras(700, 400, 200, 400)
+// const foguete = new Foguete(700)
+
+// const areaDoJogo = document.querySelector('[wm-flappy]')
+
+// areaDoJogo.appendChild(foguete.elemento)
 // barreiras.pares.forEach( par => areaDoJogo.appendChild(par.elemento))  */
 
 
@@ -158,46 +221,87 @@ setInterval(() => {
     return horizontal && vertical
 }
 
-function colidiu(passaro, barreiras) {
+function colidiu(foguete, barreiras) {
     let colidiu = false
 
     barreiras.pares.forEach(parDeBarreiras => {
         if (!colidiu) {
             const superior = parDeBarreiras.superior.elemento
             const inferior = parDeBarreiras.inferior.elemento
-            colidiu = estaoSobrepostos(passaro.elemento, superior)
-                || estaoSobrepostos(passaro.elemento, inferior)
+            colidiu = estaoSobrepostos(foguete.elemento, superior)
+                || estaoSobrepostos(foguete.elemento, inferior)
         }
     })
     return colidiu
 
 }
+function colidiuBarreiraCentral(foguete, barreira) {
+    let colidiu = false  
+        if (!colidiu) {
+            const bar = barreira.elemento
+            colidiu = estaoSobrepostos(foguete.elemento, bar)
+        }
+    return colidiu
+}
+function pegouCombustivel(foguete, combustivel){
+    let colidiu = false
 
-//  function FlappyBird() {
-//     let pontos = 0
-//     const areaDoJogo = document.querySelector('[wm-flappy]')
-//     const altura = areaDoJogo.clientHeight
-//     const largura = areaDoJogo.clientWidth
+   
+    if (!colidiu) {
+        const comb = combustivel.elemento
+        colidiu = estaoSobrepostos(foguete.elemento, comb)
+            
+    }
 
-//     const progresso = new Progresso()
-//     const barreiras = new Barreiras(altura, largura, 200, 400,
-//         () => progresso.atualizarPontos(++pontos))
+return colidiu
+}
 
-//     const passaro = new Passaro(altura)
 
-//     areaDoJogo.appendChild(progresso.elemento)
-//     areaDoJogo.appendChild(passaro.elemento)
-//     barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento))
+ function FlappyBird() {
+    let pontos = 0
+    let vida = 0
 
-//     this.start = () => {
-//         const temporizador = setInterval(() => {
-//             barreiras.animar()
-//             passaro.animar()
+    
+    const areaDoJogo = document.querySelector('[wm-flappy]')
+    const areaDeInfo = document.querySelector('[pont]')
+    const altura = areaDoJogo.clientHeight
+    const largura = areaDoJogo.clientWidth
 
-//               if(colidiu(passaro,barreiras)){
-//                  clearInterval(temporizador) 
-//              } 
-//         }, 20)
-//     }
-// }
-//  new FlappyBird().start() 
+    const progresso = new Progresso()
+    areaDeInfo.appendChild(progresso.elemento)
+    const barreiras = new Barreiras(400, 200, 100, 100,
+        () => progresso.atualizarPontos(++pontos))
+
+    const foguete = new Foguete(1200)
+    const bar = new BarreiasCentrais()
+    const comb = new Combustivel()
+    areaDoJogo.appendChild(comb.elemento)
+    barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento))
+   
+    areaDoJogo.appendChild(foguete.elemento)
+    if(pontos > 20){
+        areaDoJogo.appendChild(bar.elemento)
+    }
+    
+   
+    this.start = () => {
+        const temporizador = setInterval(() => {
+            barreiras.animar()
+            foguete.animar()
+            comb.animar()
+            bar.animar()
+
+               if(colidiu(foguete,barreiras)){
+                  clearInterval(temporizador) 
+              } 
+              if(colidiuBarreiraCentral(foguete,bar)){
+                clearInterval(temporizador) 
+              }
+              if(pegouCombustivel(foguete,comb)){
+                comb.elemento.style.display = `none`
+                vida ++; 
+              }
+        }, 20)
+    }
+}
+ new FlappyBird().start() 
