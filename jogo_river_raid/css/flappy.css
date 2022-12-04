@@ -34,7 +34,8 @@ body {
     height: 700px;
     width: 1200px;
     margin: 15px;
-    background-color: deepskyblue;
+    background-image: url(../img/ceu-2.jpg );
+    background-size: 100%;
     overflow: hidden;
 }
 
@@ -62,7 +63,7 @@ body {
 .barreira .corpo {
     height: 110px;
     width: 40px;
-    background:#639301;
+    background:#040707dc;
 
 }
 
@@ -70,7 +71,7 @@ body {
     position: absolute;
     height: 80px;
     width: 150px;
-    background:#639301;
+    background:#040707d4;
     bottom: calc(20% - 30px);
     display: flex;
     justify-content: center;
@@ -88,15 +89,33 @@ flex-direction: row;
 align-items: center;
 justify-content: space-between;
 height: 100px;
-width: 600px;
+width: 1200px;
+font-size: 30px;
+border: solid dodgerblue;
+padding: 5px;
 }
 
-.pontuacao, .energia{
-    font-family: Pixel;
-    font-size: 30px;
+.tela{
+    display: flex;
+    position: relative ;
+    height: 300px;
+    width: 600px;
+    background-color: #050505a0;
+    margin: 90px auto;
+    z-index: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
-.pontuacao span{
-    
-    margin-left: 20px;
-   
+button{
+    margin: 5px;
+    padding: 5px;
+    background-color: #639301;
+    color: #fff;
+    width: 100px;
 }
+#sair{
+    background-color: #930101;
+}
+
+
