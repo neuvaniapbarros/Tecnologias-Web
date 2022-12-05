@@ -67,15 +67,22 @@ body {
 
 }
 
-.barreiraCentral{
+.meteoro{
     position: absolute;
-    height: 80px;
-    width: 150px;
-    background:#040707d4;
+    height: 100px;
+    width: 100px;
+    background-image: url(../img/meteoro.png);
+    background-size: 100%;
     bottom: calc(20% - 30px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+}
+
+.estrela{
+    position: absolute;
+    height: 100px;
+    width: 100px;
+    background-image: url(../img/estrela.png);
+    background-size: 100%;
+    bottom: calc(20% - 30px);
 }
 
 .combustivel{

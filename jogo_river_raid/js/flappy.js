@@ -36,25 +36,54 @@ function ParDeBarreiras(altura, abertura, popsicaoNaTela) {
     this.setX(popsicaoNaTela)
 }
 
-function BarreiasCentrais(){
-    this.elemento = novoElemento('div', 'barreiraCentral')
+function Meteoro(){ //novo
+    this.elemento = novoElemento('div', 'meteoro')
     
     this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
     this.setY = y => this.elemento.style.bottom = `${y}px`
     this.getX = () => parseInt(this.elemento.style.left.split('px')[0])
     this.setX = y => this.elemento.style.left = `${y}px`
 
-       
-    this.setY(400)
-    this.setX(500)
+ 
+     this.setX((Math.random() * (700 - 400))  + 400)
+     this.setY((Math.random() * (700 - 500))  + 500)   
 
     const deslocamento = 3;
     this.animar = () => {
       
             this.setY(this.getY() - deslocamento)
+
+            if (this.getY() < -100) {
+                this.setX((Math.random() * (800 - 400))  + 400)
+                this.setY(  ((Math.random() * (700 - 500))  + 500) + 700)    // 700 para demorar a geração do proximo
+                 
+           }
         }
 }
-function Combustivel(){
+function Estrela(){ //novo
+    this.elemento = novoElemento('div', 'estrela')
+    
+    this.getY = () => parseInt(this.elemento.style.bottom.split('px')[0])
+    this.setY = y => this.elemento.style.bottom = `${y}px`
+    this.getX = () => parseInt(this.elemento.style.left.split('px')[0])
+    this.setX = y => this.elemento.style.left = `${y}px`
+
+     this.setX((Math.random() * (700 - 400))  + 400)
+     this.setY((Math.random() * (700 - 500))  + 500)   
+
+    const deslocamento = 3;
+    this.animar = () => {
+      
+            this.setY(this.getY() - deslocamento)
+
+            if (this.getY() < -100) {
+                this.setX((Math.random() * (800 - 400))  + 400)
+                this.setY(  ((Math.random() * (700 - 500))  + 500) + 700)               
+           }
+        }
+}
+
+function Combustivel(){ // novo
     this.elemento = novoElemento('img', 'combustivel')
     this.elemento.src = 'img/comb.png'
     
@@ -63,18 +92,24 @@ function Combustivel(){
     this.getX = () => parseInt(this.elemento.style.left.split('px')[0])
     this.setX = y => this.elemento.style.left = `${y}px`
 
-       
-    this.setY(400)
-    this.setX(500)
+    this.setX((Math.random() * (800 - 400))  + 400)
+    this.setY((Math.random() * (700 - 500))  + 500)    
 
-    const deslocamento = 3;
+    const deslocamento = 8;
     this.animar = () => {
+             this.setY(this.getY() - deslocamento)
       
-            this.setY(this.getY() - deslocamento)
+             if (this.getY() < -50) {
+                this.setX((Math.random() * (800 - 400))  + 400)
+                this.setY(  ((Math.random() * (700 - 500))  + 500) + 700)    
+                this.elemento.style.display = `block`
+                           
+           }
         }
 }
 
 function Barreiras(altura, largura, abertura, espaco, notificarPonto, notificarEnergia) {
+ 
     this.pares = [
         new ParDeBarreiras(altura, abertura , largura),
         new ParDeBarreiras(altura, abertura , largura + espaco),
@@ -83,9 +118,10 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto, notificarE
         new ParDeBarreiras(altura, abertura -15, largura + espaco * 4),
         new ParDeBarreiras(altura, abertura -20, largura + espaco * 5)
     ]
-
+ 
     const deslocamento = 3;
     let contador = 0;
+  
     this.animar = () => {
          
         this.pares.forEach(par => {
@@ -93,23 +129,17 @@ function Barreiras(altura, largura, abertura, espaco, notificarPonto, notificarE
             if (par.getX() < - par.getLargura()) {
                  par.setX(par.getX() + espaco * this.pares.length)
                  contador++;
-                //par.sortearAbertura()               
-            }
-            if(contador ==  6) {
-                notificarPonto();
+            }         
+             if(contador ==  6) {
+                notificarPonto()
                 notificarEnergia()
                 contador = 0;
             }
-            
-            // const meio = largura / 2
-            // const cruzouMeio = par.getX() + deslocamento >= meio
-            //     && par.getX() < meio
-            // if (cruzouMeio) {
-            //     notificarPonto()
-            // }
         })
     }
+
 }
+//Alterado 
 function Foguete(alturaJogo) {
     let voando = 0
 
@@ -119,9 +149,9 @@ function Foguete(alturaJogo) {
     this.getY = () => parseInt(this.elemento.style.left.split('px')[0])
     this.setY = y => this.elemento.style.left = `${y}px`
 
-    window.onkeypress = function (e) {
+    window.onkeypress = function (e) {  //Teclas de movimento J e L
         if(e.keyCode == 108)  voando = 1
-        else if(e.keyCode == 106)  voando = 2
+        else if(e.keyCode == 106)  voando = 2 
         else voando = 0
     }     
     
@@ -154,14 +184,14 @@ function Foguete(alturaJogo) {
     }
     this.atualizarPontos(0)
  }
- function Energia() {
+ // Novo
+ function Energia() { 
     this.elemento = novoElemento('span', 'energia')
     this.atualizarEnergia = energia => {
         this.elemento.innerHTML = `Energia:  ` + energia
     }
     this.atualizarEnergia(5)
  }
-
  function estaoSobrepostos(elementoA, elementoB) {
 
     const a = elementoA.getBoundingClientRect()
@@ -185,7 +215,8 @@ function colidiu(foguete, barreiras) {
     })
     return colidiu
 }
-function colidiuBarreiraCentral(foguete, barreira) {
+// Novo
+function colidiuMeteoro(foguete, barreira) {
     let colidiu = false  
         if (!colidiu) {
             const bar = barreira.elemento
@@ -193,12 +224,23 @@ function colidiuBarreiraCentral(foguete, barreira) {
         }
     return colidiu
 }
+
+// Novo
 function pegouCombustivel(foguete, combustivel){
     let colidiu = false
    
     if (!colidiu) {
         const comb = combustivel.elemento
-        colidiu = estaoSobrepostos(foguete.elemento, comb)
+        colidiu = estaoSobrepostos(foguete.elemento, comb)            
+    }
+return colidiu
+}
+function pegouEstrela(foguete, estrela){
+    let colidiu = false
+   
+    if (!colidiu) {
+        const estr = estrela.elemento
+        colidiu = estaoSobrepostos(foguete.elemento, estr)
             
     }
 return colidiu
@@ -211,61 +253,63 @@ function telaReiniciar(){
                                                       `<button id = "sair">Sair</button>`
 }
 
- function FlappyBird() {
+ function RiverRaid() {
     let pontos = 0
     let vida = 5
     
     const areaDoJogo = document.querySelector('[wm-flappy]')
-    const areaDeInfo = document.querySelector('[info]')
-    const altura = areaDoJogo.clientHeight
-    const largura = areaDoJogo.clientWidth
-
+    const areaDeInfo = document.querySelector('[info]') //Novo
+    
     const progresso = new Progresso()
     const  energia = new Energia()
-
+   
     areaDeInfo.appendChild(progresso.elemento)
     areaDeInfo.appendChild(energia.elemento)
     
     const barreiras = new Barreiras(400, 200, 50, 110, () => progresso.atualizarPontos(++pontos),  () => energia.atualizarEnergia(--vida))
+
     const foguete = new Foguete(1200)
-    const bar = new BarreiasCentrais()
-    const comb = new Combustivel()
-   
+   const meteoro = new Meteoro()    
+    areaDoJogo.appendChild(meteoro.elemento)
+   const comb = new Combustivel() 
     areaDoJogo.appendChild(comb.elemento)
-   
+
     barreiras.pares.forEach(par => areaDoJogo.appendChild(par.elemento))   
-   
     areaDoJogo.appendChild(foguete.elemento)
-    if(pontos > 20){
-        areaDoJogo.appendChild(bar.elemento)
-    }
+   const estrela = new Estrela()
+   areaDoJogo.appendChild(estrela.elemento)
     
     this.start = () => {
-        const temporizador = setInterval(() => {
-            barreiras.animar()
-            foguete.animar()
-            comb.animar()
-            bar.animar()
-               if(colidiu(foguete,barreiras) || colidiuBarreiraCentral(foguete,bar) || vida == 0){
-                  clearInterval(temporizador)           
-                const tela = new telaReiniciar()
-                areaDoJogo.appendChild(tela.elemento)
-                let botao1 = document.getElementById("novo_jogo");
-                let botao2 = document.getElementById("sair");
-                    botao1.onclick = function (){
-                        location.reload()
-                    }
-                    botao2.onclick = function (){
-                        window.close()
-                    }   
+           const temporizador = setInterval(() => {
+                barreiras.animar()
+                foguete.animar()
+                meteoro.animar()
+                estrela.animar()
+               comb.animar()    
+
+                if(colidiu(foguete,barreiras) || colidiuMeteoro(foguete,meteoro) || vida == 0){
+                    clearInterval(temporizador)           
+                    const tela = new telaReiniciar()
+                    areaDoJogo.appendChild(tela.elemento)
+                    let botao1 = document.getElementById("novo_jogo");
+                    let botao2 = document.getElementById("sair");
+                        botao1.onclick = function (){
+                            location.reload()
+                        }
+                        botao2.onclick = function (){
+                            window.close()
+                        }   
+                }
+               if(pegouCombustivel(foguete,comb)){
+                 comb.elemento.style.display = `none`
+                 energia.atualizarEnergia(++vida)
                }
-               
-              if(pegouCombustivel(foguete,comb)){
-                comb.elemento.style.display = `none`
-                vida++;
-                energia.atualizarEnergia(vida)
+               if(pegouEstrela(foguete,estrela)){
+                estrela.elemento.style.display = `none`
+                 progresso.atualizarPontos(++pontos)
               }
+             
         }, 20)
     }
 }
- new FlappyBird().start() 
+ new RiverRaid().start() 
